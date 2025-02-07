@@ -1,7 +1,7 @@
 # User simulator for chatbot testing
 
 ## Description
-The evolution of technology increased the complexity of chatbots, and also it's testing methods. With the introduction of LLMs, chatbots are capable of humanizing
+The evolution of technology increased the complexity of chatbots, and also its testing methods. With the introduction of LLMs, chatbots are capable of humanizing
 conversations and imitating the pragmatics of natural language. Several approaches have been created in order to evaluate the
 performance of chatbots. 
 
