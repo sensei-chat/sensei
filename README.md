@@ -1,7 +1,7 @@
 # SENSEI: end-to-end testing for chatbots
 
 This repository contains the code of SENSEI: and end-to-end testing framework for chatbots. It is made of two components:
-a user simulator (file [src/autotest.py]) and an engine to check correctness rules on the generated conversations (file [src/metamorphic_tester.py]).
+a user simulator (file [src/autotest.py](src/autotest.py)) and an engine to check correctness rules on the generated conversations (file [src/metamorphic_tester.py](src/metamorphic_tester.py)).
 Both are explained below.
 
 # autotest: User simulator for chatbot testing
