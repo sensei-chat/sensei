@@ -1,0 +1,8 @@
+name: appointment_date_tomorrow
+description: Checks the appointment date if tomorrow
+active: True
+conversations: 1
+when: ap_date=='tomorrow'
+oracle: str(confirmed_date)=="2024-10-29"
+yields: |
+  f'Wrong date: got {confirmed_date} but expected 2024-10-29'

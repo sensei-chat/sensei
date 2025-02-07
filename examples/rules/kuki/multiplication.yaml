@@ -1,0 +1,8 @@
+name: multiplication
+description: Checks the multiplication
+active: False
+conversations: 1
+when: number1 is not None and number2 is not None
+oracle: number1[0] * number2[0] == multiplication
+yields: |
+  f"Wrong result for multiplying {number1} and {number2}: expected {number1[0] * number2[0]} but got {multiplication}"

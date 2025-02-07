@@ -1,0 +1,8 @@
+name: same_number_of_toopings_cost_the_same
+description: Pizzas with same number of toppings cost the same
+conversations: 2
+active: False
+when: conv[0].drink == conv[1].drink
+if: conv[0].size == conv[1].size and len(conv[0].toppings)==len(conv[1].toppings)
+then: extract_float(conv[0].price) == extract_float(conv[1].price)
+

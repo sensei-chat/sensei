@@ -1,0 +1,85 @@
+test_name: "pizza_order_test_predefined"
+
+llm:
+  temperature: 0.0
+  model: gpt-4o-mini
+
+user:
+  role: you must act as a user ordering a pizza to a pizza shop.
+  context:
+    - personality: personalities/conversational-user.yml
+    - you are vegan
+  goals:
+    - "a {{size}} {{pizza_type}} pizza"
+    - "{{number}} cans of {{drink}}"
+    - how long is going to take the pizza to arrive
+    - how much will it cost
+
+    - number:
+        function: forward()
+        type: int
+        data:
+          file: list_functions/number_list.py
+          function_name: number_list
+          args:
+            - 1
+            - 6
+            - 2
+
+    - size:
+        function: forward(pizza_type)
+        type: string
+        data:
+          - small
+          - medium
+          - big
+
+    - pizza_type:
+        function: forward()
+        type: string
+        data:
+          file: list_functions/number_list.py
+          function_name: shuffle_list
+          args: list_functions/data/list_of_things.yml
+
+    - drink:
+        function: another()
+        type: string
+        data:
+          - Sprite
+          - Coca-Cola
+          - Pepsi
+          - any(3 soda drinks)
+          - any(3 alcoholic drinks)
+
+chatbot:
+  is_starter: True
+  fallback: I'm sorry, I did not get what you said. Can you rephrase?
+  output:
+    - price:
+        type: money
+        description: The price of the pizza order
+    - time:
+        type: time
+        description: how long is going to take the pizza to be ready more or less
+    - order_id:
+        type: str
+        description: my order ID
+
+conversation:
+  number: 1
+  goal_style:
+#      steps: 5
+    all_answered:
+      export: True
+      limit: 20
+  interaction_style:
+    - default
+#    - random:
+#      - make spelling mistakes
+#      - all questions
+#      - long phrases
+#      - change language:
+#          - italian
+#          - portuguese
+#          - chinese

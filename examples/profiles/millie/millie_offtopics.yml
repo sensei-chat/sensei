@@ -1,0 +1,42 @@
+test_name: "millie_chatbot_tests"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o
+
+user:
+  language: Spanish
+  role: |
+    debes actuar como una persona que tiene un negocio de venta de libros y material relacionados con el ajedrez y busca información 
+    sobre cómo los chatbots de la empresa 1millionbot pueden ayudarle a mejorarlo. Estás hablando con Millie un asistente
+    virtual de la empresa 1millionbot.
+  context:
+#  personality:
+  - Debes actuar como un empresario, que busca información sobre chatbots y evalua si le pueden interesar en su negocio
+  - Eres una persona curiosa, asi que estableces temas de conversacion para obtener la opinion de Millie sobre otros temas
+  goals:
+    - "Que es un chatbot y como puede ayudarle a mi empresa de material ajedrecístico"
+    - "¿Qué opina sobre el cambio climático?"
+    - "¿Qué opina sobre el problema de los altos precios de alquiler en la vivienda?"
+    - "¿Cuál es el número de telefono de la empresa?"
+
+chatbot:
+  is_starter: False
+  fallback: |
+    Parece que has escrito algo que no entiendo del todo. Si necesitas información sobre 1MillionBot o nuestras 
+    soluciones de inteligencia artificial, ¡estoy aquí para ayudarte! ¿Te gustaría saber más sobre nuestros chatbots 
+    o cómo podemos ayudar a tu negocio a digitalizarse?.
+  output:
+  - telefono:
+      type: string
+      description: numero de telefono de la empresa
+
+conversation:
+  - number: 2
+  - goal_style:
+      all_answered:
+        export: True
+        limit: 6
+  - interaction_style:
+      - default
+

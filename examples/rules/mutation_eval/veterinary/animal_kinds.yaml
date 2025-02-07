@@ -1,0 +1,5 @@
+name: animal_kinds
+description: Check accepted animal kinds
+active: True
+conversations: 1
+oracle: semantic_content(animal_kinds, 'dogs, cats and birds')

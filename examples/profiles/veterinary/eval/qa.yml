@@ -1,0 +1,47 @@
+test_name: "qa"
+
+llm:
+  temperature: 0.0
+  model: gpt-4o-mini
+
+user:
+  language: English
+  role: you have to act as a user talking to a virtual assistant of a veterinary
+  context:
+    - You are interested in asking the items below.
+    - Just stick to asking opening times (weekdays and weekends), cost of visit, types of animals accepted, care of pets. Do not ask anything else.
+  goals:
+    - "When are you open on weekdays?"
+    - "When are you open on weekends?"
+    - "How much does a vet visit cost?"
+    - "What kind of animals do you accept?"
+    - "What can I do to take care of my pet?"
+
+chatbot:
+  is_starter: True
+  fallback: I'm sorry, but I did not understand the last sentence, can you say that again?
+  output:
+    - opening_and_closing_weekdays:
+        type: str
+        description: the opening and closing time of the shop during weekdays
+    - opening_and_closing_weekends:
+        type: str
+        description: the opening and closing time of the shop during weekends
+    - visit_cost:
+        type: str
+        description: the cost of a vet visit
+    - animal_kinds:
+        type: str
+        description: the kind of animals accepted
+    - care_pet:
+        type: str
+        description: the actions to take care of the pet
+
+conversation:
+  number: 1
+  goal_style:
+      all_answered:
+        export: True
+        limit: 9
+  interaction_style:
+      - default

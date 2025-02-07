@@ -1,0 +1,7 @@
+name: unknown_toppings_are_rejected
+description: Unknown toppings are rejected
+conversations: 1
+active: False
+if: not all(elem in ['cheese', 'mushrooms', 'pepper', 'ham', 'bacon', 'pepperoni', 'olives', 'corn', 'chicken'] for elem in toppings)
+then: utterance_index('assistant', 'some of the toppings requested by the user are not valid')>0
+

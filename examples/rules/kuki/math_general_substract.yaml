@@ -1,0 +1,8 @@
+name: substraction
+description: Checks the operation
+active: False
+conversations: 1
+when: operation[0]=='substracting'
+oracle: number2[0] - number1[0] == result
+yields: |
+  f"Wrong result for substracting {number2} and {number1}: expected {number2[0] - number1[0]} but got {result}"

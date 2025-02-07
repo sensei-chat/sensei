@@ -1,0 +1,6 @@
+name: unique_ids
+description: The order IDs are unique
+active: True
+conversations: all
+oracle: is_unique('order_id')
+

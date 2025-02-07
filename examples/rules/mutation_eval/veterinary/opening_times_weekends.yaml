@@ -1,0 +1,5 @@
+name: opening_times_weekends
+description: Check opening times on weekends
+active: True
+conversations: 1
+oracle: semantic_content(opening_and_closing_weekends, 'We do not open on weekends')

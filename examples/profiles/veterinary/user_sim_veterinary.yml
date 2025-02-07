@@ -1,0 +1,63 @@
+test_name: "veterinary_test"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o
+
+user:
+  language: English
+  role: you have to act as a user contacting a veterinary
+  context:
+    - your name is Jon Doe
+    - you have a dog called Tommy
+  goals:
+    - opening and closing time
+    - "an appointment for {{date}} at {{time}}"
+
+    - time:
+        function: random()
+        type: string
+        data:
+          - 1:00 AM
+    #        - sausage
+    - date:
+        function: random()
+        type: string
+        data:
+          date:
+            #          random: 3
+            ##          set: ">today(4)"
+            ##          set: "<today(6)"
+            #          range:
+            #              min: 04/07/2024
+            #              max: 08/11/2040
+            ##              step: linspace(5) #(day(7), month(1), year(2), linspace(3))
+            #              random: 7
+            #          fake: 5
+            custom: yesterday #TODO: añadir custom para poder crear listas compuestas con funciones y fechas personalizadas
+
+chatbot:
+  is_starter: False
+  fallback: I'm sorry, I can help you to set an appointment for a session, provide price estimates, and answer on issues related to our shop
+  output:
+    - date:
+        type: date
+        description: the agreed date for the appointment (only the date)
+    - time:
+        type: time
+        description: the agreed time for the appointment (only the time)
+    - opening_and_closing:
+        type: str
+        description: the opening and closing time of the shop
+
+conversation:
+  number: 1
+  goal_style:
+        steps: 4
+  interaction_style:
+      - default
+#      - make spelling mistakes
+#      - change language:
+#          - spanish
+#          - italian
+#          - chinese

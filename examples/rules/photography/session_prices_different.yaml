@@ -1,0 +1,8 @@
+name: session_prices_different
+description: Photographing more artworks costs more (assumming equal currencies)
+active: False
+conversations: 2
+when: int(conv[0].number_photo[0]) > int(conv[1].number_photo[0])
+if:   currency(conv[0].cost) == currency(conv[1].cost)
+then: extract_float(conv[0].cost) > extract_float(conv[1].cost)
+

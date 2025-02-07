@@ -1,0 +1,8 @@
+name: cost_estimation
+description: Checks the price estimation
+active: False
+conversations: 1
+oracle: |
+  extract_float(price)==number_artworks[0]*{"sculptures": 10, "pictures": 1, "ceramic objects": 5 }[artworks]*{"photograph": 50,"create a video of": 200,"create 3D rendering of": 290}[media]
+yields: |
+  f'Wrong estimation price: got {extract_float(price)}'

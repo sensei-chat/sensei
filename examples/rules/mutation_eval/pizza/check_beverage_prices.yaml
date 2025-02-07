@@ -1,0 +1,6 @@
+name: check_beverage_prices
+description: Checks the prices of the beverages
+active: True
+conversations: 1
+oracle: |
+  semantic_content(beverages_prices, 'Sprite and Coke: 1.50$. Water: 1$')

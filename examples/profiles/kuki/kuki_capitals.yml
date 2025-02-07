@@ -1,0 +1,39 @@
+test_name: "kuki_chatbot_tests"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o-mini
+
+user:
+  language: English
+  role: |
+    Act as a young boy interested in technology, seeking help from Kuki the chatbot to solve your school duties
+  context:
+    #  personality:
+    - You should act as a young boy trying to solve geography exercises exercises
+  goals:
+    - "What is the capital city of {{country}}?"
+    - country:
+        function: forward()
+        type: string
+        data:
+          - Spain
+          - Canada
+          - Zambia
+
+chatbot:
+  is_starter: False
+  fallback: If you could bring someone from the dead, who would it be?
+  output:
+    - result:
+        type: string
+        description: the capital city of the country
+
+conversation:
+  number: 4
+  goal_style:
+      all_answered:
+        export: True
+        limit: 3
+  interaction_style:
+      - default

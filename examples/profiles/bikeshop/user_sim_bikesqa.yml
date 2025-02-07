@@ -1,0 +1,41 @@
+test_name: "qa_bikes_test"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o-mini
+
+user:
+  language: Spanish
+  role: you have to act as a user in a bike shop q&a forum
+  context:
+    personality: personalities/rude-user.yml
+  goals:
+    - "opening and closing time"
+    - "most expensive bikes"
+    - "the price of the seats"
+
+chatbot:
+  is_starter: True
+  fallback: I'm sorry it's a little loud in my shop, can you say that again?
+  output:
+    - seats:
+        type: money
+        description: the price of the seats
+    - opening_and_closing:
+        type: str
+        description: the opening and closing time of the shop
+    - most_expensive_bike:
+        type: str
+        description: the most expensive bike available in the shop
+
+conversation:
+  number: 2
+  goal_style:
+    steps: 5
+  interaction_style:
+    - make spelling mistakes
+
+
+
+
+

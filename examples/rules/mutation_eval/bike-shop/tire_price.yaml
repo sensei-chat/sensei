@@ -1,0 +1,5 @@
+name: tire_price
+description: Check tire price
+active: True
+conversations: 1
+oracle: extract_float(tire)==20

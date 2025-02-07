@@ -1,0 +1,7 @@
+name: check_pizza_prices
+description: Checks pizza prices
+active: True
+conversations: 1
+oracle: semantic_content(pizza_prices, 'Margarita pizzas are 10$ for small, 15$ for medium and 20$ for big. Other predefined pizzas, except for 
+    carbonara are 2$ more for each size. Carbonara is 2.5$ more for each size. Custom pizzas with up to
+    three ingredients are the same prices than predefined ones. Each additional ingredient has an increment of 50 cents')

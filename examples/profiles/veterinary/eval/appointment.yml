@@ -1,0 +1,59 @@
+test_name: "appointment"
+
+llm:
+  temperature: 0.0
+  model: gpt-4o-mini
+
+user:
+  language: English
+  role: you have to act as a user talking to a virtual assistant of a veterinary
+  context:
+    - your name is John Doe
+    - you have a dog called Tommy
+  goals:
+    - "Setting an appointment for {{ap_date}}, at {{hour}}, for a {{service}} of my dog"
+    - ap_date:
+        function: forward(service)
+        type: string
+        data:
+          - tomorrow
+          - November 6th, 2024
+    - hour:
+        function: another()
+        type: string
+        data:
+          - "10:00"
+          - "14:00"
+          - "13:00"
+          - "15:30"
+    - service:
+        function: forward()
+        type: string
+        data:
+          - Physical examination
+          - Vaccination
+          - Dental health and cleaning
+          - Lab or diagnostic testing
+
+chatbot:
+  is_starter: True
+  fallback: I'm sorry, but I did not understand the last sentence, can you say that again?
+  output:
+    - confirmed_date:
+        type: date
+        description: the agreed date for the appointment (only the date)
+    - confirmed_time:
+        type: time
+        description: the agreed time for the appointment (only the time)
+    - confirmed_service:
+        type: str
+        description: the kind of appointment (physical examination, vaccination, dental health and cleaning, lab or diagnostic testing)
+
+conversation:
+  number: 8
+  goal_style:
+      all_answered:
+        export: True
+        limit: 5
+  interaction_style:
+      - default

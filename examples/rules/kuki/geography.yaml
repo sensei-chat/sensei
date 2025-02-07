@@ -1,0 +1,8 @@
+name: geography
+description: Check the capital
+active: False
+conversations: 1
+oracle: |
+  {"Spain": "Madrid", "Canada": "Ottawa", "Zambia": "Lusaka"}[country[0]] == result
+yields: |
+  f"Wrong result for the capital of {country[0]}, got {result}"

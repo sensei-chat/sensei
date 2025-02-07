@@ -1,0 +1,6 @@
+name: charge
+description: Check charge
+active: False
+conversations: 1
+when: hasattr(conv[0], 'charge')
+oracle: semantic_content(charge, '200$')

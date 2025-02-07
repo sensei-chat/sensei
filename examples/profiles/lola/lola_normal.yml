@@ -1,0 +1,41 @@
+test_name: "lola_chatbot_tests"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o-mini
+
+user:
+  language: Spanish
+  role: |
+    debes actuar como un estudiante de la Universidad de Murcia (UMU), que busca asistencia sobre tu matrícula o 
+    preinscripción de primer curso de estudios de grado.  
+    Nunca actues como un asistente, tu rol es del estudiante buscando ayuda.
+  context:
+    #  personality:
+    - Debes actuar como un joven actual, que busca ayuda para su preincripción y estudios
+  goals:
+    - "¿Cuánto cuesta la matricula en el grado de telecomunicación?"
+    - "¿Cuándo empieza el curso?"
+
+chatbot:
+  is_starter: False
+  fallback: |
+    Disculpa, no entiendo bien a qué te refieres. Recuerda que estoy aquí, única y exclusivamente, para resolver tus dudas 
+    sobre el nuevo ingreso a grados de la universidad.
+  output:
+    - precio_matricula:
+        type: money
+        description: el precio de la matrícula
+
+    - comienzo_curso:
+        type: string
+        description: la fecha de comienzo de curso
+
+conversation:
+  number: 1
+  goal_style:
+      all_answered:
+        export: True
+        limit: 6
+  interaction_style:
+      - default

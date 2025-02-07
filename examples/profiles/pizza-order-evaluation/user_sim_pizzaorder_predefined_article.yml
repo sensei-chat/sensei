@@ -1,0 +1,80 @@
+test_name: "pizza_order_test_predefined_article"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o-mini
+
+user:
+  language: English
+  role: you must act as a user ordering a pizza to a pizza shop.
+  context:
+    - personality: personalities/conversational-user.yml
+  goals:
+    - "a {{size}} {{pizza_type}} pizza"
+    - "{{number}} cans of {{drink}}"
+
+    - number:
+        function: forward()
+        type: int
+        data:
+          min: 1
+          max: 3
+          step: 1
+
+    - size:
+        function: forward(pizza_type)
+        type: string
+        data:
+          - small
+          - medium
+          - large
+
+    - pizza_type:
+        function: forward()
+        type: string
+        data:
+          - margarita
+          - carbonara
+          - marinera
+          - hawaiian
+          - four cheese
+          - vegetarian
+
+    - drink:
+        function: another()
+        type: string
+        data:
+          - Sprite
+          - Coca-Cola
+          - Water
+
+chatbot:
+  is_starter: True
+  fallback: I'm sorry, I did not get what you said. Can you rephrase?
+  output:
+    - price:
+        type: money
+        description: The price of the pizza order
+    - order_id:
+        type: str
+        description: my order ID
+
+conversation:
+  number: 3
+  goal_style:
+      # steps: 1
+      all_answered:
+        export: True
+        limit: 6
+  interaction_style:
+      - default
+      #- change language:
+      #    - spanish
+#      - random:
+#        - make spelling mistakes
+#        - all questions
+#        - long phrases
+#        - change language:
+#            - italian
+#            - portuguese
+#            - chinese

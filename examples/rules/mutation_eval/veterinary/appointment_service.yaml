@@ -1,0 +1,7 @@
+name: appointment_service
+description: Checks the appointment service
+active: True
+conversations: 1
+oracle: service.lower() == confirmed_service.lower()
+yields: |
+  f'Wrong service: got {confirmed_service} but expected service'

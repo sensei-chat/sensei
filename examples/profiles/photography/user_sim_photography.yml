@@ -1,0 +1,39 @@
+test_name: "photography_test"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o-mini
+
+user:
+  language: English
+  role: you have to act as a user contacting a photography shop
+  context:
+    - your name is Jon Doe
+  ask_about:
+    - opening and closing time.
+    - cost estimation for {{number}} photo artworks.
+    - number:
+        function: forward()
+        type: int
+        data:
+          min: 1
+          max: 6
+          step: 1
+
+chatbot:
+  is_starter: True
+  fallback: I'm sorry, I can help you to set an appointment for a session, provide price estimates, and answer on issues related to our shop
+  output:
+    - cost:
+        type: money
+        description: the cost estimation for a foto session
+    - opening_and_closing:
+        type: str
+        description: the opening and closing time of the shop
+
+conversation:
+  number: 1
+  goal_style:
+        steps: 6
+  interaction_style:
+      - default

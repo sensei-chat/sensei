@@ -1,0 +1,5 @@
+name: check_times
+description: Checks pizza times
+active: True
+conversations: 1
+oracle: semantic_content(order_time, 'around 15 minutes')

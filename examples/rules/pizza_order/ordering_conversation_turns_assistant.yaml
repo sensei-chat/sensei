@@ -1,0 +1,7 @@
+name: ordering_conversation_turns_assistant
+description: The assistant confirms the pizza order after the user orders a pizza
+conversations: 1
+active: False
+oracle: utterance_index('user', 'ordering a pizza') < utterance_index('assistant', 'confirms pizza order')
+# 3rd param of utterance_index should be omitted
+

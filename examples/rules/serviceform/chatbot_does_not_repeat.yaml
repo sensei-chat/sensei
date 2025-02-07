@@ -1,0 +1,9 @@
+name: chatbot_does_not_repeat
+description: The server does not repeat answers
+conversations: 1
+active: True
+oracle: |
+  not repeated_answers(method='tf-idf', threshold=0.75)
+yields: f"The chatbots repeats {repeated_answers(method='tf-idf', threshold=0.75)}"
+# returns a list of dictionaries { step: phrase }, where phrase appears in more than one element
+

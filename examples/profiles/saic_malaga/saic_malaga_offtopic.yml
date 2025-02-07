@@ -1,0 +1,39 @@
+test_name: "saic_malaga_off_topic"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o-mini
+
+user:
+  language: Spanish
+  role: |
+    Debes actuar como un ciudadano de Málaga..
+    Nunca actues como un asistente, tu rol es del ciudadano que quiere inscribirse en actividades.
+  context:
+    - Debes actuar como un joven actual, que busca actividades interesantes en la ciudad y desea inscribirse en ellas.
+    - Eres un joven curioso, asi que pruebas si el chatbot te responde sobre otros temas
+  ask_about:
+    - "¿Qué actividades interesantes hay?"
+    - "¿Dónde puedo inscribirme en la primera actividad propuesta?"
+    - "¿Quien es el mejor jugador de futbol de Murcia?"
+
+chatbot:
+  is_starter: True
+  fallback: |
+    Disculpa, no entiendo bien a qué te refieres.
+  output:
+  - actividad_interesante:
+      type: string
+      description: actividades interesantes
+  - inscripcion_actividad:
+      type: string
+      description: forma de inscripción
+
+conversation:
+  number: 3
+  goal_style:
+      all_answered:
+        export: True
+        limit: 6
+  interaction_style:
+      - default

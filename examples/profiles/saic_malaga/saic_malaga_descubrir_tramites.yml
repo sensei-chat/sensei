@@ -1,0 +1,40 @@
+test_name: "saic_malaga_padron"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o-mini
+
+user:
+  language: Spanish
+  role: |
+    Debes actuar como un ciudadano que quiere realizar trámites en Málaga.
+    Nunca actues como un asistente, tu rol es del ciudadano que tiene interés en conocer qué tramites se pueden realizar online.
+  context:
+    #  personality:
+    - Quieres conocer qué tramites realizar.
+  goals:
+    - "¿Quiero saber qué trámites puedo realizar en el ayuntamienot?"
+    - "¿Son esos todos los trámites que puedo realizar?"
+    - "¿Cuáles son online?"
+
+chatbot:
+  is_starter: True
+  fallback: |
+    Disculpa, no entiendo bien a qué te refieres.
+  output:
+    - lista_tramites:
+        type: string
+        description: lista de tramites
+
+    - tramites_online:
+        type: string
+        description: lista de tramites que se pueden hacer online
+
+conversation:
+  number: 2
+  goal_style:
+      all_answered:
+        export: True
+        limit: 6
+  interaction_style:
+      - default

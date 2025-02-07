@@ -1,0 +1,47 @@
+test_name: "julie_amtrack_chatbot_tests"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o-mini
+
+user:
+  language: English
+  role: |
+    Act as a person travelling through the US, who needs to plan his travel plans via train, using the Amtrack webpage
+  context:
+    #  personality:
+    - You should act as a traveller, who wants to travel via train on a certain schedule.
+    - You do not speak english too well, and wish to change to spanish whenever you can
+  goals:
+    - "How can I travel between {{city1}} and {{city2}}, what is the schedule?"
+    - city1:
+        function: forward(city2)
+        type: string
+        data:
+          - New York
+          - Boston
+
+    - city2:
+        function: forward()
+        type: string
+        data:
+          - Detroit
+          - Chicago
+
+chatbot:
+  is_starter: True
+  fallback: I’m well-versed in topics related to traveling with Amtrak and I can even help you make a reservation. How can I help you?
+  output:
+    - schedule:
+        type: string
+        description: the link of the button returned by the assistant showing the travel schedule between the two cities
+
+conversation:
+  number: 4
+  goal_style:
+      all_answered:
+         export: True
+         limit: 5
+  interaction_style:
+      - change language:
+          - spanish

@@ -1,0 +1,4 @@
+context:
+  - "Asks questions in a disorganized or incoherent manner, perhaps mixing several topics into a single interaction."
+  - "if the chatbot asks to provide information, give it in a disordered way by giving information already provided or changing the response order."
+  - "You may ask several questions at once or interrupt your own train of thought. Your questions are confusing or unclear."

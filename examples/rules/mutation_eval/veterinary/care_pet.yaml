@@ -1,0 +1,6 @@
+name: care_pet
+description: Check pet care actions
+active: True
+conversations: 1
+oracle: |
+  semantic_content(care_pet, 'meet their basic needs: food, water, shelter, exercise, and love')

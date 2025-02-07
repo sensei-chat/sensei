@@ -1,0 +1,8 @@
+name: division
+description: Checks the operation
+active: False
+conversations: 1
+when: operation[0]=='dividing'
+oracle: abs(number1[0]/number2[0] - result) < 1e-03
+yields: |
+  f"Wrong result for dividing {number1} and {number2}: expected {number1[0]/number2[0]} but got {result}"

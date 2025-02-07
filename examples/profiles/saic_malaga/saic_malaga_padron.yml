@@ -1,0 +1,40 @@
+test_name: "saic_malaga_padron"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o-mini
+
+user:
+  language: Spanish
+  role: |
+    Debes actuar como un ciudadano que quiere empadronarse en Málaga.
+    Nunca actues como un asistente, tu rol es del ciudadano que necesita empadronarse.
+  context:
+#  personality:
+  - Necesitas empadronarte en Málaga.
+  ask_about:
+    - "Quiero empadronarme"
+    - "¿Qué información necesito para empadronarme?"
+    - "¿A qué lugar de debo dirigirme para empadronarme o puedo hacerlo online?"
+
+chatbot:
+  is_starter: True
+  fallback: |
+    Disculpa, no entiendo bien a qué te refieres.
+  output:
+  - informacion_empadronamiento:
+      type: string
+      description: información necesaria para empadronarse
+
+  - lugar_empadronamiento:
+      type: string
+      description: el lugar donde hay que ir para empadronarse o online si se puede hacer online
+
+conversation:
+  number: 2
+  goal_style:
+      all_answered:
+        export: True
+        limit: 6
+  interaction_style:
+      - default

@@ -1,0 +1,6 @@
+name: answers_in_english
+description: The chatbot answers in english
+conversations: 1
+active: False
+oracle: language(chatbot_phrases) == 'ENG'
+

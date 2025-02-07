@@ -1,0 +1,5 @@
+name: check_pizza_types
+description: Checks pizza types
+active: True
+conversations: 1
+oracle: semantic_content(pizza_types, 'Margarita, Carbonara, Marinera, Hawaiian, Four cheese, Vegetarian, and Custom')

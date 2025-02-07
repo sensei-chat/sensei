@@ -1,0 +1,43 @@
+test_name: "set_photo_appointment_with_email"
+
+llm:
+  temperature: 0.0
+  model: gpt-4o-mini
+
+user:
+  language: English
+  role: you have to act as a user contacting a photography shop in New York, and talking to a virtual assistant.
+  context:
+    - your name is Ann Clark, and you own an art gallery. Your email is ann@artgal.com
+  goals:
+    - "Setting an appointment for {{ap_date}}, any time is fine, your phone number is {{phone_no}}"
+    - ap_date:
+        function: forward(phone_no)
+        type: string
+        data:
+          - tomorrow
+          - November 8th, 2024
+
+    - phone_no:
+        function: forward()
+        type: string
+        data:
+          - (212) 555-1734
+          - (617) 545-1356
+
+chatbot:
+  is_starter: True
+  fallback: I'm sorry, I can help you to set an appointment for a session, provide price estimates, and answer on issues related to our shop
+  output:
+    - confirmed_appointment:
+        type: date
+        description: the date of the appointment, confirmed by the assistant
+
+conversation:
+  number: 4
+  goal_style:
+      all_answered:
+        export: True
+        limit: 7
+  interaction_style:
+      - default

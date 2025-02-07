@@ -1,0 +1,5 @@
+name: some_high_price
+description: Some of the prices are high
+conversations: all
+oracle: exists('extract_float(cost) > 50')
+

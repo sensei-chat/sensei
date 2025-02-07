@@ -1,0 +1,7 @@
+name: ordering_conversation_turns
+description: The user always orders a pizza and then drinks
+conversations: 1
+active: False
+oracle: utterance_index('user', 'ordering a pizza') < utterance_index('user', 'ordering drink')
+# 3rd param of utterance_index should be omitted
+

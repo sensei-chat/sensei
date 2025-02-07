@@ -1,0 +1,8 @@
+name: non_empty_links
+description: The server does not return buttons with no links
+conversations: 1
+active: False
+oracle: |
+  not chatbot_returns("LINK: <empty>") and not chatbot_returns("AVAILABLE BUTTONS:", and_not="- BUTTON TEXT:")
+# returns a list of the steps in which the chatbot returns a message with that pattern. We check that the list is empty
+

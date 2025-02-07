@@ -1,0 +1,5 @@
+name: tune_up
+description: Tune up price
+active: True
+conversations: 1
+oracle: extract_float(tune_up)==150

@@ -1,0 +1,61 @@
+test_name: "appointment"
+
+llm:
+  temperature: 0.0
+  model: gpt-4o-mini
+
+user:
+  language: English
+  role:
+    you have to act as a user talking to a virtual assistant of a bike shop
+  context:
+    - You are interested in setting an appointment for your bike
+  goals:
+    - "Setting an appointment for {{ap_date}}, at {{hour}}, for a {{service}} of my bike"
+    - ap_date:
+        function: forward(service)
+        type: string
+        data:
+          - tomorrow
+          - November 6th, 2024
+    - hour:
+        function: another()
+        type: string
+        data:
+          - "10:00"
+          - "14:00"
+          - "13:00"
+          - "15:30"
+
+    - service:
+        function: forward()
+        type: string
+        data:
+          - tune-up
+          - repair
+
+
+chatbot:
+  is_starter: True
+  fallback: I'm sorry it's a little loud in my shop, can you say that again?
+  output:
+    - confirmed_date:
+        type: date
+        description: the date of the appointment, confirmed by the assistant
+    - confirmed_time:
+        type: str
+        description: the hour of the appointment, confirmed by the assistant
+    - confirmed_service:
+        type: str
+        description: the service to be done in the appointment, confirmed by the assistant
+
+
+
+conversation:
+  number: 4
+  goal_style:
+    all_answered:
+      export: True
+      limit: 5
+  interaction_style:
+      - default

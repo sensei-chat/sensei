@@ -1,0 +1,34 @@
+test_name: "qa2"
+
+llm:
+  temperature: 0.0
+  model: gpt-4o-mini
+
+user:
+  language: English
+  role: you have to act as a user contacting a photography shop in New York, and talking to a virtual assistant.
+  context:
+    - You want to obtain some information about the photography shop (charge and media). Only focus on those two items.
+  goals:
+    - "Do you charge per hour or by number of photos?"
+    - "What media do you work on?"
+
+chatbot:
+  is_starter: True
+  fallback: I'm sorry, I can help you to set an appointment for a session, provide price estimates, and answer on issues related to our shop
+  output:
+    - charge:
+        type: string
+        description: Cost per hour of the photography shop
+    - media_work:
+        type: string
+        description: The media the photography shop works on
+
+conversation:
+  number: 1
+  goal_style:
+      all_answered:
+        export: True
+        limit: 6
+  interaction_style:
+      - default

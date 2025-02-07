@@ -1,0 +1,5 @@
+name: visit_cost
+description: Check vet visit cost
+active: True
+conversations: 1
+oracle: semantic_content(visit_cost, 'Between $50 and $60')

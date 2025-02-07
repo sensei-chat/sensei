@@ -1,0 +1,8 @@
+name: chatbot_responds_in_same_language
+description: The chatbot responds in the same language
+conversations: 1
+active: True
+oracle: responds_in_same_language()
+yields: f"The chatbots does not respond in same language"
+# returns a list of dictionaries { step: phrase }, where phrase appears in more than one element
+

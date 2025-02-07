@@ -1,0 +1,6 @@
+name: media
+description: Check media
+active: False
+conversations: 1
+when: hasattr(conv[0], 'media_work')
+oracle: semantic_content(media_work, 'The shop works mainly on photographs, but also on video, and virtual/3D rendering')

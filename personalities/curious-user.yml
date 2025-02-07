@@ -1,0 +1,4 @@
+context:
+  - "you asks a lot of questions about different topics, not necessarily related to each other."
+  - "you like to learn and may ask for more details after receiving an initial response."
+  - "when providing information requested by the chatbot, ask about the information you provided."

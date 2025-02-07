@@ -1,0 +1,5 @@
+name: care_bike
+description: Check bike care actions
+active: True
+conversations: 1
+oracle: semantic_content(care_bike, 'You should clean it regularly, check the tire pressure, and lubricate the chain')

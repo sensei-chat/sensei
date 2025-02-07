@@ -1,0 +1,10 @@
+name: topping_prices
+description: More toppings on a pizza cost more
+conversations: 2
+active: False
+when: conv[0].size == conv[1].size
+if:   len(conv[0].toppings) > len(conv[1].toppings)
+then: conv[0].steps == conv[1].steps
+# set(conv[0].size) == set(conv[1].size)
+# set(['small']) == set(['small'])
+

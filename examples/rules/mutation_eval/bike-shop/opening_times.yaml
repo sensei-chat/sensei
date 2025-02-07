@@ -1,0 +1,5 @@
+name: opening_times
+description: Check opening times
+active: True
+conversations: 1
+oracle: semantic_content(opening_and_closing, 'every weekday from 9am to 5:30pm')

@@ -1,0 +1,5 @@
+name: seat_price
+description: Check seat price
+active: True
+conversations: 1
+oracle: semantic_content(seat_price, 'Between 50$ and 100$')

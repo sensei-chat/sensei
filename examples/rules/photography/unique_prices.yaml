@@ -1,0 +1,5 @@
+name: unique_prices
+description: The prices are unique
+conversations: all
+oracle: is_unique('cost')
+

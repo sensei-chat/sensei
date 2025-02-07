@@ -1,0 +1,7 @@
+name: session_prices_equal
+description: Photographing the same number of artworks cost the same
+active: False
+conversations: 2
+if:   conv[0].number_photo == conv[1].number_photo
+then: conv[0].cost == conv[1].cost
+

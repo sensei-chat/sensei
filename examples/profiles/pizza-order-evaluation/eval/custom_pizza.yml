@@ -1,0 +1,66 @@
+test_name: "custom_eval"
+
+llm:
+  temperature: 0.0
+  model: gpt-4o-mini
+
+user:
+  role:
+    you must act as a user ordering a pizza to a pizza shop virtual assistant.
+    Just order the pizza, once confirmed, then order the drink. Do not ask for extra toppings, or discounts, or delivery times or any other thing.
+  context:
+    #  personality:
+    - Just order the pizza, once confirmed, then order the drink. Do not ask for discounts, or delivery times or any other thing.
+  goals:
+    - "a {{size}} custom pizza with {{toppings}}"
+    - "the following drink: {{drink}}"
+
+    - size:
+        function: forward()
+        type: string
+        data:
+          - small
+          - medium
+          - big
+
+    - toppings:
+        function: random(3)
+        type: string
+        data:
+          - cheese
+          - mushrooms
+          - pepper
+          - ham
+          - bacon
+          - pepperoni
+          - olives
+          - corn
+          - chicken
+
+    - drink:
+        function: another()
+        type: string
+        data:
+          - sprite
+          - coke
+          - water
+
+chatbot:
+  is_starter: False
+  fallback: I'm sorry, I did not get what you said. I can help you ordering predefined or custom pizzas, and then drinks.
+  output:
+    - price:
+        type: money
+        description: The price of the pizza order
+    - order_id:
+        type: str
+        description: my order ID
+
+conversations:
+  number: 6
+  goal_style:
+      all_answered:
+        export: True
+        limit: 7
+  interaction_style:
+      - default

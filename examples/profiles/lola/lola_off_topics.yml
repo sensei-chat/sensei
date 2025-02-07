@@ -1,0 +1,41 @@
+test_name: "lola_chatbot_tests"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o
+
+user:
+  language: Spanish
+  role: |
+    debes actuar como un estudiante de la Universidad de Murcia (UMU), que busca asistencia sobre tu matrícula o 
+    preinscripción de primer curso de estudios de grado.  
+    Nunca actues como un asistente, tu rol es del estudiante buscando ayuda.
+  context:
+    #  personality:
+    - Debes actuar como un joven actual, que busca ayuda para su preincripción y estudios
+    - Eres un joven curioso, asi que pruebas si el chatbot te responde sobre otros temas
+  goals:
+    - "¿Donde está el campus de la universidad?"
+    - "¿Quien es el mejor jugador de futbol de murcia?"
+
+chatbot:
+  is_starter: False
+  fallback: |
+    Disculpa, no entiendo bien a qué te refieres. Recuerda que estoy aquí, única y exclusivamente, para resolver tus dudas 
+    sobre el nuevo ingreso a grados de la universidad.
+  output:
+    - campus:
+        type: string
+        description: la localizacion del campus de murcia
+
+conversation:
+  number: 3
+  goal_style:
+    all_answered:
+      export: True
+      limit: 6
+  interaction_style:
+    - default
+
+
+

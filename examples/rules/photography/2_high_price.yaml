@@ -1,0 +1,5 @@
+name: 2_high_price
+description: In two conversations, the prices are high
+conversations: all
+oracle: num_exist('extract_float(cost) > 50') == 4
+

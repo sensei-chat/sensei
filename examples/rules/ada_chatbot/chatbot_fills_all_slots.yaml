@@ -1,0 +1,7 @@
+name: chatbot_fills_all_slots
+description: All conversation slots are filled
+conversations: 1
+active: True
+oracle: data_collected()==True
+yields: |
+  f"Missing slots: {missing_slots()}"

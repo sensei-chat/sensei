@@ -1,0 +1,48 @@
+test_name: "qa_eval"
+
+llm:
+  temperature: 0.0
+  model: gpt-4o-mini
+
+user:
+  role:
+    you must act as a user asking information to a pizza shop virtual assistant.
+  context:
+    #  personality:
+    - Just ask the questions you'd like to know
+  goals:
+    - "What are the opening hours?"
+    - "What types of pizza do you serve?"
+    - "What are the prices of the pizzas? How much do they cost?"
+    - "What are the prices of the beverages?"
+    - "How do I get the order? Do you deliver orders?"
+    - "How much time does it take to get an order?"
+
+chatbot:
+  is_starter: False
+  fallback: I'm sorry, I did not get what you said. I can help you ordering predefined or custom pizzas, and then drinks.
+  output:
+    - opening_hours:
+        type: str
+        description: The opening hours of the shop
+    - pizza_types:
+        type: str
+        description: The types of pizzas served
+    - pizza_prices:
+        type: str
+        description: The prices of the pizzas
+    - beverages_prices:
+        type: str
+        description: The prices of the beverages
+    - order_time:
+        type: str
+        description: the time it takes to get an order
+
+conversation:
+  number: 1
+  goal_style:
+      all_answered:
+        export: True
+        limit: 8
+  interaction_style:
+      - default

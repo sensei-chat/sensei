@@ -1,0 +1,42 @@
+test_name: "qa"
+
+llm:
+  temperature: 0.0
+  model: gpt-4o-mini
+
+user:
+  language: English
+  role:
+    you have to act as a user contacting a photography shop in New York, and talking to a virtual assistant.
+  context:
+    - You want to obtain some information about the photography shop
+  goals:
+    - "When are you open?"
+    - "Where is the shop?"
+    - "Tell me about your portfolio, what important projects have you worked on?"
+
+chatbot:
+  is_starter: True
+  fallback: I'm sorry, I can help you to set an appointment for a session, provide price estimates, and answer on issues related to our shop
+  output:
+    - opening_times:
+        type: string
+        description: Opening times of the photography shop
+    - address:
+        type: string
+        description: Address of the photography shop
+    - portfolio:
+        type: string
+        description: Portfolio of important projects the photography shop has worked on
+
+conversation:
+  number: 1
+  goal_style:
+      all_answered:
+        export: True
+        limit: 8
+  interaction_style:
+      - default
+
+
+

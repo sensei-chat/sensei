@@ -1,0 +1,7 @@
+name: appointment_hour
+description: Checks the appointment hour
+active: True
+conversations: 1
+oracle: hour[0] in str(confirmed_time)
+yields: |
+  f'Wrong hour: got {confirmed_time} but expected hour[0]'

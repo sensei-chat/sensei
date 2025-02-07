@@ -1,0 +1,54 @@
+test_name: "kuki_chatbot_tests"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o
+
+user:
+  language: English
+  role: |
+    Act as a young boy interested in technology, seeking help from Kuki the chatbot to solve your school duties
+  context:
+    #  personality:
+    - You should act as a young boy trying to solve math exercises
+  goals:
+    - "What is the result of {{operation}} {{number1}} and {{number2}}?"
+    - operation:
+        function: forward()
+        type: string
+        data:
+          - adding
+          - substracting
+          - multiplying
+          - dividing
+    - number1:
+        function: random()
+        type: int
+        data:
+          min: 4134
+          max: 5678
+          step: 12
+    - number2:
+        function: random()
+        type: int
+        data:
+          min: 24134
+          max: 56768
+          step: 127
+
+chatbot:
+  is_starter: False
+  fallback: If you could bring someone from the dead, who would it be?
+  output:
+    - result:
+        type: float
+        description: the result of the operation of the two numbers, when explicitly found in the conversation and given by the assistant
+
+conversation:
+  number: 4
+  goal_style:
+      all_answered:
+         export: True
+         limit: 3
+  interaction_style:
+      - default

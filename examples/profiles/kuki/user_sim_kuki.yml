@@ -1,0 +1,35 @@
+test_name: "kuki_chatbot_tests"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o
+
+user:
+  language: English
+  role: |
+    Act as a young girl interested in technology, and on what chatbots can do. Use emoticons when possible.
+  context:
+    #  personality:
+    - You should act as a young girl
+  ask_about:
+    - "What is a chatbot and what can it do"
+    - "Who is the Kuki chatbot, and how old is she"
+    - "Which technology Kuki is made of"
+
+chatbot:
+  is_starter: False
+  fallback: If you could bring someone from the dead, who would it be?
+  output:
+    - age:
+        type: int
+        description: age of Kuki
+    - technology:
+        type: string
+        description: technology Kuki is built with
+
+conversation:
+  number: 1
+  goal_style:
+        steps: 6
+  interaction_style:
+      - default

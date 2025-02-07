@@ -1,0 +1,44 @@
+test_name: "serviceform_chatbot_tests"
+
+llm:
+  temperature: 0.8
+  model: gpt-4o
+
+user:
+  language: English
+  role: |
+    Act as a business woman interested in getting information about the services offered by the serviceform company.
+    You own a small business related to coin and stamp collection. Never agree to speak to a real person or receive a call.
+  context:
+    - personality: personalities/conversational-user.yml
+    - You should act as a business woman, looking for information about chatbots, and to evaluate if they may be useful to your business
+    - Talk to the chatbot about mundane topics, like sports, cooking or travelling
+  goals:
+    - "Inform that you have a website with {{visits}} visits per week"
+    - "The most appropriate plan for your business, and its price"
+    - visits:
+        function: forward()
+        type: string
+        data:
+          - dozens
+          - hundrends
+          - thousands
+
+chatbot:
+  is_starter: True
+  fallback: |
+    It seems like your message got a bit jumbled. Could you please clarify what you meant?
+  output:
+    - most_appropriate_plan:
+        type: string
+        description: the most appropriate plan to contract
+    - plan_price:
+        type: money
+        description: the price of the offered plan
+
+conversation:
+  number: 1
+  goal_style:
+        steps: 5
+  interaction_style:
+      - default
