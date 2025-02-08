@@ -1,26 +1,27 @@
 # SENSEI: end-to-end testing for chatbots
 
 This repository contains the code of SENSEI: and end-to-end testing framework for chatbots. It is made of two components:
-a user simulator (file [src/autotest.py](src/autotest.py)) and an engine to check correctness rules on the generated conversations (file [src/metamorphic_tester.py](src/metamorphic_tester.py)).
-Both are explained below.
+a user simulator (file [src/sensei-chat.py](src/sensei-chat.py)) and an engine to check correctness rules on the generated conversations (file [src/sensei-check.py](src/sensei-check.py)).
+The working scheme of both tools is shown in the next figure, and they are explained [here](#sensei-chat) and [here](#sensei-check).
 
-# autotest: User simulator for chatbot testing
+<p align="center">
+<img src="https://github.com/user-attachments/assets/9d697d6e-c3c3-4c4f-a7a7-2a4064da1221" width="600"/>
+</p>
+<!---
+![sensei](https://github.com/user-attachments/assets/9d697d6e-c3c3-4c4f-a7a7-2a4064da1221)
+-->
 
-## Description
-The evolution of technology increased the complexity of chatbots, and also its testing methods. With the introduction of LLMs, chatbots are capable of humanizing
-conversations and imitating the pragmatics of natural language. Several approaches have been created in order to evaluate the
-performance of chatbots. 
+# sensei-chat
 
-The code in this project allows creating test cases based in conversations that a user simulator will have
-with the chatbot to test.
+sensei-chat generates conversation sequences based on a conversation profile that establishes the user context, interaction style and conversation goals. The simulator uses this profile to create a prompt, which is passed to an LLM to obtain user utterances aligned with the profile. Then, it sends these utterances to the chatbot under test to obtain its responses, and overall compose a complete conversation. 
 
 ## Usage
 
-In order to run the simulator, a specific chatbot should be deployed previously (i.e. Taskyto, Rasa...). 
+In order to run the simulator, a specific chatbot should be targeted. Chatbots are treated as black-boxes -- they can be accessed via REST APIs. sensei-chat supports chatbots built and deployed with some of the supported technologies like Taskyto, Rasa, or existing chatbots on the web, like kuki or julie (from Armtrak).
 
-The script "autorun.py" contains the functions to load the user simulator profile, start a conversation with the chatbot 
+The script "sensei-chat.py" contains the functions to load the user simulator profile, start a conversation with the chatbot 
 and save this conversation and its configuration parámeters. The user simulator profile is stored in yaml files,
-which should be located in some folder (`user_sim/yaml/user_sim_bikesqa.yaml`).
+which should be located in some folder (`examples/profiles/ada/ada-erasmus.yaml`).
 
 ## Environment Configuration
 
@@ -31,7 +32,7 @@ The most important API key is `OPENAI_API_KEY`.
 ## User Profile YAML Configuration
 
 This file contains all the properties the user will follow in order to carry out the conversation. Since the user simulator is
-based in OpenAI GPT4-o LLM technology, some of the fields should be written as prompts in natural language. For these fields, a 
+based in OpenAI GPT4-o-mini LLM technology, some of the fields should be written as prompts in natural language. For these fields, a 
 prompt engineering task should be carried out by the tester to narrow down the role of the user simulator and guide its
 behaviour. A description of the fields and an example of the YAML structure is described below.
 
@@ -413,6 +414,38 @@ Then, it selects a random amount of interaction styles to apply to the conversat
     ```
   - default: the user simulator will carry out the conversation in a natural way.
 
-  
+# sensei-check
 
+The sensei-check testing module allows executing correctness rules against conversation sets. A YAML-based DSL permits defining the rules, whereby each rule specifies its name, a description, if it is active (inactive rules will be ignored), the number of conversations to apply the rule to, an optional filter to select only the conversations satisfying it, a correctness condition, and an optional error message. Both filters and correctness conditions are specified using Python syntax. The DSL enables oracle-based testing (an oracle on individual conversations), metamorphic testing (a metamorphic relation on more than one conversation), and global rules (conditions checked on all conversations, e.g., to test uniqueness or existential conditions). 
 
+The next listing is an example of a rule that checks the base price of small pizzas. The number of required conversations is 1 (line 3), and the filter only selects conversations ordering a small pizza (line 4). The when expression in the filter has Python syntax and may use the variables defined in the conversation profile as input (size, pizza_type, number, drink) or output (price, order_id). 
+In this case, variable size is a collection, so the filter selects its only value (size[0]). 
+The oracle (line 5), which can also use the defined input and output variables, checks that the float value extracted from variable price is at least 10, and the currency is US dollars. We provide a library of useful functions (like extract_float or currency) to extract and analyse information from the user utterances and chatbot responses.
+
+```
+name: small_pizza_price
+description: Checks the base price of small pizzas (>=10$)
+conversations: 1
+when: size[0] == 'small'
+oracle: extract_float(price) >= 10 and currency(price) == 'USD'
+```
+
+Correctness rules involving two or more conversations are akin to metamorphic relations. These rules can refer to the input and output variables of the involved conversations via the collection conv. For instance, conv[0].size returns the pizza size of the first considered conversation. As an example, next listing defines a rule that compares any two conversations (line 3) ordering custom pizzas of the same size and drink choice (line 4). The metamorphic relation is defined in lines 5--6, and checks that the order with more pizza toppings costs more. 
+
+```
+name: more_toppings_cost_more
+description: Adding more toppings to a custom pizza costs more
+conversations: 2
+when: conv[0].size == conv[1].size and conv[0].drink == conv[1].drink and conv[0].number == conv[1].number
+if:   len(conv[0].toppings) > len(conv[1].toppings)
+then: extract_float(conv[0].price) > extract_float(conv[1].price)
+```
+
+Global rules enable checking correctness conditions across all generated conversations at once, typically to assess universal quantification (the condition holds on all conversations) or existential quantification (the condition holds at least once). The next listing shows a global rule (option all in line 3) to verify that the order ID returned by the chatbot is unique across all conversations (line 4). Naturally, this does not preclude that duplicate IDs might appear if new conversations are generated.
+
+```
+name: unique_ids
+description: order ids are unique
+conversations: all
+oracle: is_unique('order_id')
+```
