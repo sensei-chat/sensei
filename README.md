@@ -1,6 +1,6 @@
 # SENSEI: end-to-end testing for chatbots
 
-This repository contains the code of SENSEI: and end-to-end testing framework for chatbots. It is made of two components:
+This repository contains the code of SENSEI: an end-to-end testing framework for chatbots. It is made of two components:
 a user simulator (file [src/sensei-chat.py](src/sensei-chat.py)) and an engine to check correctness rules on the generated conversations (file [src/sensei-check.py](src/sensei-check.py)).
 The working scheme of both tools is shown in the next figure, and they are explained [here](#sensei-chat) and [here](#sensei-check).
 
@@ -20,7 +20,7 @@ sensei-chat generates conversation sequences based on a conversation profile tha
 In order to run the simulator, a specific chatbot should be targeted. Chatbots are treated as black-boxes -- they can be accessed via REST APIs. sensei-chat supports chatbots built and deployed with some of the supported technologies like Taskyto, Rasa, or existing chatbots on the web, like kuki or julie (from Armtrak).
 
 The script "sensei-chat.py" contains the functions to load the user simulator profile, start a conversation with the chatbot 
-and save this conversation and its configuration parámeters. The user simulator profile is stored in yaml files,
+and save this conversation and its configuration parameters. The user simulator profile is stored in yaml files,
 which should be located in some folder (`examples/profiles/ada/ada-erasmus.yaml`).
 
 ## Environment Configuration
@@ -119,7 +119,7 @@ conversation:
 
 # test_name
 
-Here it is defined the name of the test suit. This name will be assigned to the exported test file and the folder containing the tests.
+Here it is defined the name of the test suite. This name will be assigned to the exported test file and the folder containing the tests.
 
 # llm
   This parameter establishes the characteristics of the llm model. It consists of a dictionary with two fields, "model" and "temperature".
@@ -145,7 +145,7 @@ This parameter defines the main language that will be used in the conversations.
 
 ## context
 
-  This field consist of a list of prompts that will define some characteristics of the user simulator. 
+  This field consists of a list of prompts that will define some characteristics of the user simulator. 
   This can be used to define the name of the user, the availability for an appointment, allergies or intolerances, etc.
   An option for loading predefined "personalities" can be enabled by typing inside of this field "personality:" and the
   path to the YAML file containing the desired personality. These personalities can go along with characteristics added
@@ -153,10 +153,10 @@ This parameter defines the main language that will be used in the conversations.
 
 ## goals
 
-This field, named "ask_about" in previous versions is used to narrow down the conversation topics the user simulator will carry out with the chatbot. 
+This field, named "ask_about" in previous versions, is used to narrow down the conversation topics the user simulator will carry out with the chatbot. 
 It consists of a list of strings and dictionaries.
 
-The tester define a list of prompts with indications for the user simulator to check on the chatbot. 
+The tester defines a list of prompts with indications for the user simulator to check on the chatbot. 
 These prompts can contain variables that should be called inside the text between double brackets {{var}}. 
 Variables are useful to provide variability in the testing process and should be instantiated in the list as 
 shown in the example above with the exact same name as written between brackets (case-sensitive).
@@ -208,7 +208,7 @@ goals:
   This function can be used alone in the list or accompanied by other items added by the user. When used with other items,
   the "any()" function will exclude these items from the list generation process in case they're related to the instruction. Multiple
   "any()" functions can be used inside the list.
-  Note that if no amount is specified in the prompt, the "any()" function will create a list with an unpredictable amount of items.
+  If no amount is specified in the prompt, the "any()" function will create a list with an unpredictable amount of items.
 
 
   The possibility to add personalized list functions to create data lists is another option available in this field,
@@ -234,10 +234,10 @@ goals:
         function_name: shuffle_list
         args: list_functions/list_of_things.yml
 ```
-  In these two examples, a personalized list function is implemented in "data". The structure consist in three parameters:
+  In these two examples, a personalized list function is implemented in "data". The structure consists of three parameters:
  - file: The path to the .py file where the function is created
  - function_name: the name of the function to run inside the .py file
- - args: the required input args for the function.
+ - args: the required input args for the function
 
   List functions are fully personalized by the user. 
 
@@ -253,11 +253,11 @@ goals:
 samples will be picked from the list. This number can't exceed the list length.
 - random(rand): this function picks a random amount of random samples inside the list. 
 This amount will not exceed the list length.
-- another(): the another() function will always randomly pick a different sample until finishing the options.
-- forward(): this function iterates through each of the samples in the list one by one. It allows to nest multiple
-forward() functions in order to cover all combinations possible. An example of this is shown in the "goals" section
+- another(): this function will always randomly pick a different sample until finishing the options.
+- forward(): this function iterates through each of the samples in the list one by one. It allows nesting multiple
+forward() functions in order to cover all possible combinations. An example of this is shown in the "goals" section
 in the main example. To nest forward() functions it is necessary to reference the variable that it is going to nest by typing
-its name inside the brackets, as shown in the example below:
+its name inside brackets, as shown in the example below:
 ```
   goals:
     - "{{cans}} cans of {{drink}}"
@@ -296,9 +296,9 @@ its name inside the brackets, as shown in the example below:
 
 ## output
 
-This field helps the tester get some certain information for the conversation once it is finished. It is used for data validation tasks.
+This field helps the tester get certain information from the conversation once it is finished. It is used for data validation tasks.
 
-The tester defines some certain data to obtain from the conversation in order to validate the consistency and
+The tester defines the data to obtain from the conversation in order to validate the consistency and
 performance of the chatbot. This output field must follow the structure below:
 
 ```
@@ -368,10 +368,10 @@ of conversation to generate will be determined by the number of combinations obt
   
   # These "goals" variables will generate 2 x 3 = 6 conversations when "all_combinations" is selected.
   ```
-  In the same case, another option named "sample()" is defined on this field. This option allows to generate only a fraction of the total amount 
+  In the same case, another option named "sample()" is defined on this field. This option allows generating only a fraction of the total amount 
   of combinations based on a decimal percentage defined inside the brackets.
-  In previous example, when the number of conversation parameter is set to sample(0.2), a total amount of 6 x 0.2 = 1.2 ≈ 1 conversation will be generated.
-- goal_style: this defines how the conversation should end. There are 3 options in this update
+  In the previous example, when the number of conversation parameter is set to sample(0.2), a total amount of 6 x 0.2 = 1.2 ≈ 1 conversation will be generated.
+- goal_style: this defines how the conversation should end. There are 3 options:
   - steps: the tester should input the number of interactions to be done before the conversation ends.
   - random steps: a random number of interactions will be done between 1 and an amount defined by the user. This amount can't exceed 20.
   - all_answered: the conversation will end as long as all the queries in "goals" have been asked by the user and answered by the chatbot. 
@@ -380,8 +380,8 @@ of conversation to generate will be determined by the number of combinations obt
   "all_answered" is defined, the export field is set as False by default.
     When all_answered is set, conversations are regulated with a loop break based on the chatbot's fallback message in order to avoid infinite loops when the chatbot does 
   not know how to answer to several questions made by the user. But, in some cases, this loop break can be dodged due to hallucinations from the chatbot, leading to
-  irrelevant and extremely long conversations. To avoid this, a "limit" parameter is implemented in order to give the tester the possibility to stop the conversation
-  after a specific amount of interactions in case the loop break was not triggered before or all queries were not answered. This parameter is not mandatory neither and will
+  irrelevant and extremely long conversations. To avoid this, a "limit" parameter is implemented to give the tester the possibility to stop the conversation
+  after a specific amount of interactions in case the loop break was not triggered before, or all queries were not answered. This parameter is not mandatory and will
   be set to 30 interactions by default.
   ```
   goal_style:
@@ -390,16 +390,16 @@ of conversation to generate will be determined by the number of combinations obt
       limit: 20
   ```
   - default: the default mode enables "all_answered" mode with 'export' set as False and 'limit' set to 30, since no steps are defined.
-- interaction_style: this indicates how the user simulator should carry out the conversation. There are 7 options in this update
+- interaction_style: this indicates how the user simulator should carry out the conversation. There are 7 options:
   - long phrase: the user will use very long phrases to write any query.
   - change your mind: the user will change its mind eventually. Useful in conversations when the user has to
                       provide information, such as toppings on a pizza, an appointment date...
   - change language: the user will change the language in the middle of a conversation. This should be defined as a list
                      of languages inside the parameter, as shown in the example above.
-  - make spelling mistakes: the user will make typos and spelling mistakes during the conversation
+  - make spelling mistakes: the user will make typos and spelling mistakes during the conversation.
   - single question: the user makes only one query per interaction from "goals" field.
   - all questions: the user asks everything inside the "goals" field in one interaction.
-  - random: this options allows to create a list inside of it with any of the interaction styles mentioned above. 
+  - random: this options allows creating a list inside of it with any of the interaction styles mentioned above. 
 Then, it selects a random amount of interaction styles to apply to the conversation. Here's an example on how to apply this interaction style:
     ```
     interaction_style:
@@ -430,7 +430,7 @@ when: size[0] == 'small'
 oracle: extract_float(price) >= 10 and currency(price) == 'USD'
 ```
 
-Correctness rules involving two or more conversations are akin to metamorphic relations. These rules can refer to the input and output variables of the involved conversations via the collection conv. For instance, conv[0].size returns the pizza size of the first considered conversation. As an example, next listing defines a rule that compares any two conversations (line 3) ordering custom pizzas of the same size and drink choice (line 4). The metamorphic relation is defined in lines 5--6, and checks that the order with more pizza toppings costs more. 
+Correctness rules involving two or more conversations are akin to metamorphic relations. These rules can refer to the input and output variables of the involved conversations via the collection conv. For instance, conv[0].size returns the pizza size of the first considered conversation. As an example, the next listing defines a rule that compares any two conversations (line 3) ordering custom pizzas of the same size and drink choice (line 4). The metamorphic relation is defined in lines 5--6, and checks that the order with more pizza toppings costs more. 
 
 ```
 name: more_toppings_cost_more
